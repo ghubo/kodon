@@ -1,81 +1,381 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
 ---
 
 <Layout title="Welcome to Astro.">
-	<main>
-		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
-		<ul role="list" class="link-card-grid">
-			<Card
-				href="https://docs.astro.build/"
-				title="Documentation"
-				body="Learn how Astro works and explore the official API docs."
-			/>
-			<Card
-				href="https://astro.build/integrations/"
-				title="Integrations"
-				body="Supercharge your project with new frameworks and libraries."
-			/>
-			<Card
-				href="https://astro.build/themes/"
-				title="Themes"
-				body="Explore a galaxy of community-built starter themes."
-			/>
-			<Card
-				href="https://astro.build/chat/"
-				title="Community"
-				body="Come say hi to our amazing Discord community. ❤️"
-			/>
-		</ul>
-	</main>
-</Layout>
+    <main class="grid content-center text-center gap-1">
+        <p class="text-center text-sm font-light">Gunakan tanda pisah (-) untuk memisahkan antar-triplet!</p>
+        <form class="grid place-items-center">
+            <label for="sense">Sense</label>
+            <input type="text" name="sense" id="sense" oninput="this.value = this.value.toUpperCase()">
+            <label for="antisense">Anti-sense</label>
+            <input type="text" name="antisense" id="antisense" oninput="this.value = this.value.toUpperCase()">
+            <label for="kodon">Kodon</label>
+            <input type="text" name="kodon" id="kodon" oninput="this.value = this.value.toUpperCase()">
+            <label for="antikodon">Anti-kodon</label>
+            <input type="text" name="antikodon" id="antikodon" oninput="this.value = this.value.toUpperCase()">
+        </form>
+        <p>Asam Amino</p>
+        <div id="asamamino">
+        </div>
+    </main>
+    <script>
+        const form = document.querySelector('form')
 
-<style>
-	main {
-		margin: auto;
-		padding: 1.5rem;
-		max-width: 60ch;
-	}
-	h1 {
-		font-size: 3rem;
-		font-weight: 800;
-		margin: 0;
-	}
-	.text-gradient {
-		background-image: var(--accent-gradient);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-size: 400%;
-		background-position: 0%;
-	}
-	.instructions {
-		line-height: 1.6;
-		margin: 1rem 0;
-		border: 1px solid rgba(var(--accent), 25%);
-		background-color: white;
-		padding: 1rem;
-		border-radius: 0.4rem;
-	}
-	.instructions code {
-		font-size: 0.875em;
-		font-weight: bold;
-		background: rgba(var(--accent), 12%);
-		color: rgb(var(--accent));
-		border-radius: 4px;
-		padding: 0.3em 0.45em;
-	}
-	.instructions strong {
-		color: rgb(var(--accent));
-	}
-	.link-card-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(24ch, 1fr));
-		gap: 1rem;
-		padding: 0;
-	}
-</style>
+        const sense = form.sense
+        const antisense = form.antisense
+        const kodon = form.kodon
+        const antikodon = form.antikodon
+
+        const asamamino = document.getElementById('asamamino')
+
+        form.addEventListener('input', (e) => {
+            let target = e.target
+
+            if (target == sense) {
+                antisense.value = Array.from(sense.value).map(e => {
+                    switch (e) {
+                        case 'A':
+                            return 'T'
+                            break;
+                        case 'T':
+                            return 'A'
+                            break;
+                        case 'G':
+                            return 'C'
+                            break;
+                        case 'C':
+                            return 'G'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        default:
+                            return alert('Sense hanya terdiri dari TCAG (Huruf Balok)')
+                    }
+                }).join('')
+
+                kodon.value = Array.from(sense.value).map(e => {
+                    switch (e) {
+                        case 'T':
+                            return 'U'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        case 'A':
+                        case 'G':
+                        case 'C':
+                            return e
+                        default:
+                            return
+                    }
+                }).join('')
+
+                antikodon.value = Array.from(antisense.value).map(e => {
+                    switch (e) {
+                        case 'T':
+                            return 'U'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        case 'A':
+                        case 'G':
+                        case 'C':
+                            return e
+                        default:
+                            return
+                    }
+                }).join('')
+            } else if (target == antisense) {
+                sense.value = Array.from(antisense.value).map(e => {
+                    switch (e) {
+                        case 'A':
+                            return 'T'
+                            break;
+                        case 'T':
+                            return 'A'
+                            break;
+                        case 'G':
+                            return 'C'
+                            break;
+                        case 'C':
+                            return 'G'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        default:
+                            return alert('Anti-sense hanya terdiri dari TCAG (Huruf Balok)')
+                    }
+                }).join('')
+
+                kodon.value = Array.from(sense.value).map(e => {
+                    switch (e) {
+                        case 'T':
+                            return 'U'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        case 'A':
+                        case 'G':
+                        case 'C':
+                            return e
+                        default:
+                            return
+                    }
+                }).join('')
+
+                antikodon.value = Array.from(antisense.value).map(e => {
+                    switch (e) {
+                        case 'T':
+                            return 'U'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        case 'A':
+                        case 'G':
+                        case 'C':
+                            return e
+                        default:
+                            return
+                    }
+                }).join('')
+            } else if (target == kodon) {
+                antikodon.value = Array.from(kodon.value).map(e => {
+                    switch (e) {
+                        case 'A':
+                            return 'U'
+                            break;
+                        case 'U':
+                            return 'A'
+                            break;
+                        case 'G':
+                            return 'C'
+                            break;
+                        case 'C':
+                            return 'G'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        default:
+                            return alert('Kodon hanya terdiri dari UCAG (Huruf Balok)')
+                    }
+                }).join('')
+                
+                sense.value = Array.from(kodon.value).map(e => {
+                    switch (e) {
+                        case 'U':
+                            return 'T'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        case 'A':
+                        case 'G':
+                        case 'C':
+                            return e
+                        default:
+                            return
+                    }
+                }).join('')
+
+                antisense.value = Array.from(antikodon.value).map(e => {
+                    switch (e) {
+                        case 'U':
+                            return 'T'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        case 'A':
+                        case 'G':
+                        case 'C':
+                            return e
+                        default:
+                            return
+                    }
+                }).join('')
+            } else if (target = antikodon) {
+                kodon.value = Array.from(antikodon.value).map(e => {
+                    switch (e) {
+                        case 'A':
+                            return 'U'
+                            break;
+                        case 'U':
+                            return 'A'
+                            break;
+                        case 'G':
+                            return 'C'
+                            break;
+                        case 'C':
+                            return 'G'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        default:
+                            return alert('Anti-kodon hanya terdiri dari UCAG (Huruf Balok)')
+                    }
+                }).join('')
+                
+                sense.value = Array.from(kodon.value).map(e => {
+                    switch (e) {
+                        case 'U':
+                            return 'T'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        case 'A':
+                        case 'G':
+                        case 'C':
+                            return e
+                        default:
+                            return
+                    }
+                }).join('')
+
+                antisense.value = Array.from(antikodon.value).map(e => {
+                    switch (e) {
+                        case 'U':
+                            return 'T'
+                            break;
+                        case '-':
+                            return '-'
+                            break;
+                        case 'A':
+                        case 'G':
+                        case 'C':
+                            return e
+                        default:
+                            return
+                    }
+                }).join('')
+            }
+
+            asamamino.innerText = kodon.value.split('-').map(e => {
+                switch (e) {
+                    case 'UUU':
+                    case 'UUC':
+                        return e + ': Fenilalanin'
+                        break;
+                    case 'UUA':
+                    case 'UUG':
+                        return e + ': Leusin'
+                        break;
+                    case 'UCU':
+                    case 'UCC':
+                    case 'UCA':
+                    case 'UCG':
+                        return e + ': Serin'
+                        break;
+                    case 'UAU':
+                    case 'UAC':
+                        return e + ': Tirosin'
+                        break;
+                    case 'UGU':
+                    case 'UGC':
+                        return e + ': Sistein'
+                        break;
+                    case 'UGG':
+                        return e + ': Triptopan'
+                        break;
+                    case 'CUU':
+                    case 'CUC':
+                    case 'CUA':
+                    case 'CUG':
+                        return e + ': Leusin'
+                        break;
+                    case 'CCU':
+                    case 'CCC':
+                    case 'CCA':
+                    case 'CCG':
+                        return e + ': Prolin'
+                        break;
+                    case 'CAU':
+                    case 'CAC':
+                        return e + ': Histidin'
+                        break;
+                    case 'CAA':
+                    case 'CAG':
+                        return e + ': Glutamin'
+                        break;
+                    case 'CGU':
+                    case 'CGC':
+                    case 'CGA':
+                    case 'CGG':
+                        return e + ': Arginin'
+                        break;
+                    case 'AUU':
+                    case 'AUA':
+                    case 'AUC':
+                        return e + ': Isoleusin'
+                        break;
+                    case 'AUG':
+                        return e + ': Metionin (Start)'
+                        break;
+                    case 'ACU':
+                    case 'ACC':
+                    case 'ACA':
+                    case 'ACG':
+                        return e + ': Treonin'
+                        break;
+                    case 'AAU':
+                    case 'AAC':
+                        return e + ': Asparagin'
+                        break;
+                    case 'AAA':
+                    case 'AAG':
+                        return e + ': Lisin'
+                        break;
+                    case 'AGU':
+                    case 'AGC':
+                        return e + ': Serin'
+                        break;
+                    case 'AGA':
+                    case 'AGG':
+                        return e + ': Arginin'
+                        break;
+                    case 'GUU':
+                    case 'GUC':
+                    case 'GUA':
+                    case 'GUG':
+                        return e + ': Valin'
+                        break;
+                    case 'GCU':
+                    case 'GCC':
+                    case 'GCA':
+                    case 'GCG':
+                        return e + ': Alanin'
+                        break;
+                    case 'GAU':
+                    case 'GAC':
+                        return e + ': Aspartat'
+                        break;
+                    case 'GAA':
+                    case 'GAG':
+                        return e + ': Glutamat'
+                        break;
+                    case 'GGU':
+                    case 'GGC':
+                    case 'GGA':
+                    case 'GGG':
+                        return e + ': Glisin'
+                        break;
+                    case 'UAA':
+                    case 'UAG':
+                    case 'UGA':
+                        return e + ' (Stop)'
+                        break;
+                    default:
+                        return e + '?'
+                }
+            }).join('\n')
+        })
+    </script>
+</Layout>
